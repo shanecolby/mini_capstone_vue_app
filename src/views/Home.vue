@@ -8,15 +8,25 @@
     <p>Description:<input type="text" v-model="description"></p>
     <p>Image_url:<input type="text" v-model="image_url"></p>
     <button v-on:click="createProduct()">Create Product</button>
+    <br>
+  
 
     <!-- <h2>{{ products }}</h2> -->
     <!-- <button v-on:click="productsIndex()">Show Products</button> -->
     <div v-for="product in products">
+      {{ product.id }}
       {{ product.name }}
       <!-- {{ product.image_url }} -->
       <p><img v-bind:src="product.image_url" v-bind:alt="product.name"></p>
+      <button v-on:click="showProduct()">Show more information</button>
       <hr>
     </div>
+    <dialog id="product-details">
+      <form method="dialog">
+        <h3>Product information</h3>
+        <button>Close</button>
+      </form>
+    </dialog>  
   </div>
 </template>
 <style>
@@ -59,6 +69,10 @@ export default {
         console.log(response.data);
         this.products.push(response.data);
       });
+    },
+    showProduct: function () {
+      console.log("show product...");
+      document.querySelector("#product-details").showModal();
     },
   },
 };
