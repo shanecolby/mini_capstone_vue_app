@@ -3,7 +3,12 @@
     <h1>{{ message }}</h1>
 
     <h2>Make a new product</h2>
+    <p>Name:<input type="text" v-model="name"></p>
+    <p>Price:<input type="text" v-model="price"></p>
+    <p>Description:<input type="text" v-model="description"></p>
+    <p>Image_url:<input type="text" v-model="image_url"></p>
     <button v-on:click="createProduct()">Create Product</button>
+
     <!-- <h2>{{ products }}</h2> -->
     <!-- <button v-on:click="productsIndex()">Show Products</button> -->
     <div v-for="product in products">
@@ -22,10 +27,11 @@ export default {
   data: function () {
     return {
       message: "Products Page",
-      products: [
-        // { id: 1, name: "Product 1", price: 10 },
-        // { id: 2, name: "Product 2", price: 230 },
-      ],
+      products: [],
+      name: "",
+      price: "",
+      description: "",
+      image_url: "",
     };
   },
 
@@ -44,11 +50,10 @@ export default {
     createProduct: function () {
       console.log("creating product..");
       var params = {
-        name: "Notepad",
-        price: 8,
-        description: "Perfect for taking notes",
-        image_url:
-          "https://images-na.ssl-images-amazon.com/images/I/71GzkOUiTRL._AC_SL1500_.jpg",
+        name: this.name,
+        price: this.price,
+        description: this.description,
+        image_url: this.image_url,
       };
       axios.post("/api/products", params).then((response) => {
         console.log(response.data);
