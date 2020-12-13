@@ -1,6 +1,9 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
+
+    <h2>Make a new product</h2>
+    <button v-on:click="createProduct()">Create Product</button>
     <!-- <h2>{{ products }}</h2> -->
     <!-- <button v-on:click="productsIndex()">Show Products</button> -->
     <div v-for="product in products">
@@ -36,6 +39,20 @@ export default {
       axios.get("/api/products").then((response) => {
         console.log(response.data);
         this.products = response.data;
+      });
+    },
+    createProduct: function () {
+      console.log("creating product..");
+      var params = {
+        name: "Notepad",
+        price: 8,
+        description: "Perfect for taking notes",
+        image_url:
+          "https://images-na.ssl-images-amazon.com/images/I/71GzkOUiTRL._AC_SL1500_.jpg",
+      };
+      axios.post("/api/products", params).then((response) => {
+        console.log(response.data);
+        this.products.push(response.data);
       });
     },
   },
