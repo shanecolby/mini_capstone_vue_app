@@ -5,6 +5,8 @@
     <!-- <button v-on:click="productsIndex()">Show Products</button> -->
     <div v-for="product in products">
       {{ product.name }}
+      <!-- {{ product.image_url }} -->
+      <p><img v-bind:src="product.image_url" v-bind:alt="product.name"></p>
       <hr>
     </div>
   </div>
