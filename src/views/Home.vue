@@ -24,11 +24,12 @@
     <dialog id="product-details">
       <form method="dialog">
         <h3>Product information</h3>
-        <p>{{ currentProduct.name}}</p>
-        <p>{{ currentProduct.price}}</p>
-        <p>{{ currentProduct.description}}</p>
-        <p>{{ currentProduct.image_url}}</p>
+        <p><strong>Name: </strong> <input type="text" v-model="currentProduct.name"></p>
+        <p><strong>Price: </strong><input type="text" v-model="currentProduct.price"></p>
+        <p><strong>Description: </strong><input type="text" v-model="currentProduct.description"></p>
+        <p><strong>Image_url: </strong><input type="text" v-model="currentProduct.image_url"></p>
         <button>Close</button>
+        <button v-on:click="updateProduct()">Update</button>
       </form>
     </dialog>  
   </div>
@@ -75,11 +76,28 @@ export default {
         this.products.push(response.data);
       });
     },
+    updateProduct: function () {
+      var params = {
+        name: this.currentProduct.name,
+        price: this.currentProduct.price,
+        description: this.currentProduct.description,
+        image_url: this.currentProduct.image_url,
+      };
+      console.log("updating product..");
+      axios
+        .patch("/api/products/" + this.currentProduct.id, params)
+        .then((response) => {
+          console.log(response.data);
+        });
+    },
     showProduct: function (Product) {
-      console.log("theProduct");
+      console.log("Product");
       this.currentProduct = Product;
       console.log("show product...");
       document.querySelector("#product-details").showModal();
+    },
+    destroyProduct: function (Product) {
+      console.log("destroy product...");
     },
   },
 };
