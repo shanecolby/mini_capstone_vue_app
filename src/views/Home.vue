@@ -30,6 +30,7 @@
         <p><strong>Image_url: </strong><input type="text" v-model="currentProduct.image_url"></p>
         <button>Close</button>
         <button v-on:click="updateProduct()">Update</button>
+        <button v-on:click="destroyProduct()">Remove Product</button>
       </form>
     </dialog>  
   </div>
@@ -96,8 +97,16 @@ export default {
       console.log("show product...");
       document.querySelector("#product-details").showModal();
     },
-    destroyProduct: function (Product) {
+    destroyProduct: function () {
       console.log("destroy product...");
+      axios
+        .delete("/api/products/" + this.currentProduct.id)
+        .then((response) => {
+          console.log(response.data);
+          var index = this.products.indexOf(this.currentProduct);
+          console.log(index);
+          this.products.splice(index, 1);
+        });
     },
   },
 };
